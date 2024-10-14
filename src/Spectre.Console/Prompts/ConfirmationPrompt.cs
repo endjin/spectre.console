@@ -68,12 +68,18 @@ public sealed class ConfirmationPrompt : IPrompt<bool>
     }
 
     /// <inheritdoc/>
+#if !NETSTANDARD2_0
+    [RequiresUnreferencedCode("Type conversion might require unreferenced code.")]
+#endif
     public bool Show(IAnsiConsole console)
     {
         return ShowAsync(console, CancellationToken.None).GetAwaiter().GetResult();
     }
 
     /// <inheritdoc/>
+#if !NETSTANDARD2_0
+    [RequiresUnreferencedCode("Type conversion might require unreferenced code.")]
+#endif
     public async Task<bool> ShowAsync(IAnsiConsole console, CancellationToken cancellationToken)
     {
         var comparer = Comparer ?? StringComparer.CurrentCultureIgnoreCase;

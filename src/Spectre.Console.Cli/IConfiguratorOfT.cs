@@ -28,7 +28,11 @@ public interface IConfigurator<in TSettings>
     /// arguments, flags or option values.
     /// </remarks>
     /// <typeparam name="TDefaultCommand">The default command type.</typeparam>
+#if !NETSTANDARD2_0
+    void SetDefaultCommand<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.Interfaces)] TDefaultCommand>()
+#else
     void SetDefaultCommand<TDefaultCommand>()
+#endif
         where TDefaultCommand : class, ICommandLimiter<TSettings>;
 
     /// <summary>
@@ -44,7 +48,11 @@ public interface IConfigurator<in TSettings>
     /// <typeparam name="TCommand">The command type.</typeparam>
     /// <param name="name">The name of the command.</param>
     /// <returns>A command configurator that can be used to configure the command further.</returns>
+#if !NETSTANDARD2_0
+    ICommandConfigurator AddCommand<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.Interfaces)] TCommand>(string name)
+#else
     ICommandConfigurator AddCommand<TCommand>(string name)
+#endif
         where TCommand : class, ICommandLimiter<TSettings>;
 
     /// <summary>

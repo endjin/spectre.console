@@ -15,6 +15,9 @@ public sealed class CommandApp : ICommandApp
     /// Initializes a new instance of the <see cref="CommandApp"/> class.
     /// </summary>
     /// <param name="registrar">The registrar.</param>
+#if !NETSTANDARD2_0
+    [RequiresUnreferencedCode("Type conversion might require unreferenced code.")]
+#endif
     public CommandApp(ITypeRegistrar? registrar = null)
     {
         registrar ??= new DefaultTypeRegistrar();
@@ -42,7 +45,11 @@ public sealed class CommandApp : ICommandApp
     /// </summary>
     /// <typeparam name="TCommand">The command type.</typeparam>
     /// <returns>A <see cref="DefaultCommandConfigurator"/> that can be used to configure the default command.</returns>
+#if !NETSTANDARD2_0
+    public DefaultCommandConfigurator SetDefaultCommand<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.Interfaces)] TCommand>()
+#else
     public DefaultCommandConfigurator SetDefaultCommand<TCommand>()
+#endif
         where TCommand : class, ICommand
     {
         return new DefaultCommandConfigurator(GetConfigurator().SetDefaultCommand<TCommand>());
@@ -53,6 +60,9 @@ public sealed class CommandApp : ICommandApp
     /// </summary>
     /// <param name="args">The arguments.</param>
     /// <returns>The exit code from the executed command.</returns>
+#if !NETSTANDARD2_0
+    [RequiresUnreferencedCode("Type conversion might require unreferenced code.")]
+#endif
     public int Run(IEnumerable<string> args)
     {
         return RunAsync(args).GetAwaiter().GetResult();
@@ -63,6 +73,9 @@ public sealed class CommandApp : ICommandApp
     /// </summary>
     /// <param name="args">The arguments.</param>
     /// <returns>The exit code from the executed command.</returns>
+#if !NETSTANDARD2_0
+    [RequiresUnreferencedCode("Type conversion might require unreferenced code.")]
+#endif
     public async Task<int> RunAsync(IEnumerable<string> args)
     {
         try

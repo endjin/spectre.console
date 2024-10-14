@@ -4,12 +4,18 @@ internal sealed class CommandExecutor
 {
     private readonly ITypeRegistrar _registrar;
 
+#if !NETSTANDARD2_0
+    [RequiresUnreferencedCode("Type conversion might require unreferenced code.")]
+#endif
     public CommandExecutor(ITypeRegistrar registrar)
     {
         _registrar = registrar ?? throw new ArgumentNullException(nameof(registrar));
         _registrar.Register(typeof(DefaultPairDeconstructor), typeof(DefaultPairDeconstructor));
     }
 
+#if !NETSTANDARD2_0
+    [RequiresUnreferencedCode("Type conversion might require unreferenced code.")]
+#endif
     public async Task<int> Execute(IConfiguration configuration, IEnumerable<string> args)
     {
         if (configuration == null)
@@ -129,6 +135,9 @@ internal sealed class CommandExecutor
         return parsedResult;
     }
 
+#if !NETSTANDARD2_0
+    [RequiresUnreferencedCode("Type conversion might require unreferenced code.")]
+#endif
     private static async Task<int> Execute(
         CommandTree leaf,
         CommandTree tree,

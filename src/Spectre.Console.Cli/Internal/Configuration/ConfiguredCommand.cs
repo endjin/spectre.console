@@ -47,7 +47,11 @@ internal sealed class ConfiguredCommand
         return new ConfiguredCommand(name, null, typeof(TSettings), null, false);
     }
 
+#if !NETSTANDARD2_0
+    public static ConfiguredCommand FromType<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.Interfaces)] TCommand>(string name, bool isDefaultCommand = false)
+#else
     public static ConfiguredCommand FromType<TCommand>(string name, bool isDefaultCommand = false)
+#endif
         where TCommand : class, ICommand
     {
         var settingsType = ConfigurationHelper.GetSettingsType(typeof(TCommand));

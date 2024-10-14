@@ -89,12 +89,18 @@ public sealed class SelectionPrompt<T> : IPrompt<T>, IListPromptStrategy<T>
     }
 
     /// <inheritdoc/>
+#if !NETSTANDARD2_0
+    [RequiresUnreferencedCode("Type conversion might require unreferenced code.")]
+#endif
     public T Show(IAnsiConsole console)
     {
         return ShowAsync(console, CancellationToken.None).GetAwaiter().GetResult();
     }
 
     /// <inheritdoc/>
+#if !NETSTANDARD2_0
+    [RequiresUnreferencedCode("Type conversion might require unreferenced code.")]
+#endif
     public async Task<T> ShowAsync(IAnsiConsole console, CancellationToken cancellationToken)
     {
         // Create the list prompt
@@ -159,6 +165,9 @@ public sealed class SelectionPrompt<T> : IPrompt<T>, IListPromptStrategy<T>
     }
 
     /// <inheritdoc/>
+#if !NETSTANDARD2_0
+    [RequiresUnreferencedCode("Type conversion might require unreferenced code.")]
+#endif
     IRenderable IListPromptStrategy<T>.Render(IAnsiConsole console, bool scrollable, int cursorIndex,
         IEnumerable<(int Index, ListPromptItem<T> Node)> items, bool skipUnselectableItems, string searchText)
     {

@@ -16,6 +16,9 @@ public interface ICommandApp
     /// </summary>
     /// <param name="args">The arguments.</param>
     /// <returns>The exit code from the executed command.</returns>
+#if !NETSTANDARD2_0
+    [RequiresUnreferencedCode("Type conversion might require unreferenced code.")]
+#endif
     int Run(IEnumerable<string> args);
 
     /// <summary>
@@ -23,5 +26,8 @@ public interface ICommandApp
     /// </summary>
     /// <param name="args">The arguments.</param>
     /// <returns>The exit code from the executed command.</returns>
+#if !NETSTANDARD2_0
+    [RequiresUnreferencedCode("Type conversion might require unreferenced code.")]
+#endif
     Task<int> RunAsync(IEnumerable<string> args);
 }

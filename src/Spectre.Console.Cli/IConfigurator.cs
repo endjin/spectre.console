@@ -35,7 +35,12 @@ public interface IConfigurator
     /// <typeparam name="TCommand">The command type.</typeparam>
     /// <param name="name">The name of the command.</param>
     /// <returns>A command configurator that can be used to configure the command further.</returns>
+#if !NETSTANDARD2_0
+    ICommandConfigurator AddCommand<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.Interfaces)] TCommand>(string name)
+#else
     ICommandConfigurator AddCommand<TCommand>(string name)
+#endif
+
         where TCommand : class, ICommand;
 
     /// <summary>

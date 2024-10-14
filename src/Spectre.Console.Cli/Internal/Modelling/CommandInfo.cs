@@ -6,7 +6,13 @@ internal sealed class CommandInfo : ICommandContainer, ICommandInfo
     public HashSet<string> Aliases { get; }
     public string? Description { get; }
     public object? Data { get; }
+#if !NETSTANDARD2_0
+    [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)]
+#endif
     public Type? CommandType { get; }
+#if !NETSTANDARD2_0
+    [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)]
+#endif
     public Type SettingsType { get; }
     public Func<CommandContext, CommandSettings, Task<int>>? Delegate { get; }
     public bool IsDefaultCommand { get; }

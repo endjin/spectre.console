@@ -106,12 +106,18 @@ public sealed class TextPrompt<T> : IPrompt<T>, IHasCulture
     /// <param name="console">The console to show the prompt in.</param>
     /// <returns>The user input converted to the expected type.</returns>
     /// <inheritdoc/>
+#if !NETSTANDARD2_0
+    [RequiresUnreferencedCode("Type conversion might require unreferenced code.")]
+#endif
     public T Show(IAnsiConsole console)
     {
         return ShowAsync(console, CancellationToken.None).GetAwaiter().GetResult();
     }
 
     /// <inheritdoc/>
+#if !NETSTANDARD2_0
+    [RequiresUnreferencedCode("Type conversion might require unreferenced code.")]
+#endif
     public async Task<T> ShowAsync(IAnsiConsole console, CancellationToken cancellationToken)
     {
         if (console is null)
@@ -189,6 +195,9 @@ public sealed class TextPrompt<T> : IPrompt<T>, IHasCulture
     /// Writes the prompt to the console.
     /// </summary>
     /// <param name="console">The console to write the prompt to.</param>
+#if !NETSTANDARD2_0
+    [RequiresUnreferencedCode("Type conversion might require unreferenced code.")]
+#endif
     private void WritePrompt(IAnsiConsole console)
     {
         if (console is null)

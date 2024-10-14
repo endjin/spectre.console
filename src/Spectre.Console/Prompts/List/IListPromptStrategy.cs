@@ -34,6 +34,9 @@ internal interface IListPromptStrategy<T>
     /// <param name="skipUnselectableItems">A value indicating whether or not the prompt should skip unselectable items.</param>
     /// <param name="searchText">The search text.</param>
     /// <returns>A <see cref="IRenderable"/> representing the items.</returns>
+#if !NETSTANDARD2_0
+    [RequiresUnreferencedCode("Type conversion might require unreferenced code.")]
+#endif
     public IRenderable Render(IAnsiConsole console, bool scrollable, int cursorIndex,
         IEnumerable<(int Index, ListPromptItem<T> Node)> items, bool skipUnselectableItems, string searchText);
 }

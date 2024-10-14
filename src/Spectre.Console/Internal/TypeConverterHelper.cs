@@ -2,6 +2,9 @@ namespace Spectre.Console;
 
 internal static class TypeConverterHelper
 {
+#if !NETSTANDARD2_0
+    [RequiresUnreferencedCode("Type conversion might require unreferenced code.")]
+#endif
     public static string ConvertToString<T>(T input)
     {
         var result = GetTypeConverter<T>().ConvertToInvariantString(input);
@@ -13,6 +16,9 @@ internal static class TypeConverterHelper
         return result;
     }
 
+#if !NETSTANDARD2_0
+    [RequiresUnreferencedCode("Type conversion might require unreferenced code.")]
+#endif
     public static bool TryConvertFromString<T>(string input, [MaybeNull] out T? result)
     {
         try
@@ -26,7 +32,9 @@ internal static class TypeConverterHelper
             return false;
         }
     }
-
+#if !NETSTANDARD2_0
+    [RequiresUnreferencedCode("Type conversion might require unreferenced code.")]
+#endif
     public static bool TryConvertFromStringWithCulture<T>(string input, CultureInfo? info, [MaybeNull] out T? result)
     {
         try
@@ -48,8 +56,12 @@ internal static class TypeConverterHelper
             return false;
         }
     }
-
+#if !NETSTANDARD2_0
+    [RequiresUnreferencedCode("Type conversion might require unreferenced code.")]
+    public static TypeConverter GetTypeConverter<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.All)] T>()
+#else
     public static TypeConverter GetTypeConverter<T>()
+#endif
     {
         var converter = TypeDescriptor.GetConverter(typeof(T));
         if (converter != null)

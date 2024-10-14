@@ -12,6 +12,9 @@ internal sealed class ListPrompt<T>
         _strategy = strategy ?? throw new ArgumentNullException(nameof(strategy));
     }
 
+#if !NETSTANDARD2_0
+    [RequiresUnreferencedCode("Type conversion might require unreferenced code.")]
+#endif
     public async Task<ListPromptState<T>> Show(
         ListPromptTree<T> tree,
         Func<T, string> converter,
@@ -84,6 +87,9 @@ internal sealed class ListPrompt<T>
         return state;
     }
 
+#if !NETSTANDARD2_0
+    [RequiresUnreferencedCode("Type conversion might require unreferenced code.")]
+#endif
     private IRenderable BuildRenderable(ListPromptState<T> state)
     {
         var pageSize = state.PageSize;

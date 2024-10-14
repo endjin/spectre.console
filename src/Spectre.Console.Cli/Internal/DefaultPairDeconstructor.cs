@@ -1,5 +1,8 @@
 namespace Spectre.Console.Cli;
 
+#if !NETSTANDARD2_0
+[RequiresUnreferencedCode("Type conversion might require unreferenced code.")]
+#endif
 [SuppressMessage("Performance", "CA1812: Avoid uninstantiated internal classes")]
 internal sealed class DefaultPairDeconstructor : IPairDeconstructor
 {
@@ -44,6 +47,9 @@ internal sealed class DefaultPairDeconstructor : IPairDeconstructor
             Parse(stringValue, valueType));
     }
 
+#if !NETSTANDARD2_0
+    [RequiresUnreferencedCode("Type conversion might require unreferenced code.")]
+#endif
     private static object? Parse(string value, Type targetType)
     {
         try
@@ -58,6 +64,9 @@ internal sealed class DefaultPairDeconstructor : IPairDeconstructor
         }
     }
 
+#if !NETSTANDARD2_0
+    [RequiresUnreferencedCode("Type conversion might require unreferenced code.")]
+#endif
     private static TypeConverter GetConverter(Type type)
     {
         var converter = TypeDescriptor.GetConverter(type);

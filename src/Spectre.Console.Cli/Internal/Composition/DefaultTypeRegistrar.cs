@@ -21,7 +21,13 @@ internal sealed class DefaultTypeRegistrar : ITypeRegistrar
         return container;
     }
 
+#if !NETSTANDARD2_0
+    public void Register(
+        [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)] Type service,
+        [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)] Type implementation)
+#else
     public void Register(Type service, Type implementation)
+#endif
     {
         var registration = new ComponentRegistration(implementation, new ReflectionActivator(implementation), new[] { service });
         _registry.Enqueue(registry => registry.Register(registration));
