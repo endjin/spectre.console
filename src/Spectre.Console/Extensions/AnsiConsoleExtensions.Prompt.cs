@@ -12,6 +12,9 @@ public static partial class AnsiConsoleExtensions
     /// <param name="console">The console.</param>
     /// <param name="prompt">The prompt to display.</param>
     /// <returns>The prompt input result.</returns>
+#if !NETSTANDARD2_0
+    [RequiresUnreferencedCode("Type conversion might require unreferenced code.")]
+#endif
     public static T Prompt<T>(this IAnsiConsole console, IPrompt<T> prompt)
     {
         if (prompt is null)
@@ -29,6 +32,9 @@ public static partial class AnsiConsoleExtensions
     /// <param name="console">The console.</param>
     /// <param name="prompt">The prompt markup text.</param>
     /// <returns>The prompt input result.</returns>
+#if !NETSTANDARD2_0
+    [RequiresUnreferencedCode("Type conversion might require unreferenced code.")]
+#endif
     public static T Ask<T>(this IAnsiConsole console, string prompt)
     {
         return new TextPrompt<T>(prompt).Show(console);
@@ -42,6 +48,9 @@ public static partial class AnsiConsoleExtensions
     /// <param name="prompt">The prompt markup text.</param>
     /// <param name="culture">Specific CultureInfo to use when converting input.</param>
     /// <returns>The prompt input result.</returns>
+#if !NETSTANDARD2_0
+    [RequiresUnreferencedCode("Type conversion might require unreferenced code.")]
+#endif
     public static T Ask<T>(this IAnsiConsole console, string prompt, CultureInfo? culture)
     {
         var textPrompt = new TextPrompt<T>(prompt);
@@ -56,6 +65,9 @@ public static partial class AnsiConsoleExtensions
     /// <param name="prompt">The prompt markup text.</param>
     /// <param name="defaultValue">Specifies the default answer.</param>
     /// <returns><c>true</c> if the user selected "yes", otherwise <c>false</c>.</returns>
+#if !NETSTANDARD2_0
+    [RequiresUnreferencedCode("Type conversion might require unreferenced code.")]
+#endif
     public static bool Confirm(this IAnsiConsole console, string prompt, bool defaultValue = true)
     {
         return new ConfirmationPrompt(prompt)

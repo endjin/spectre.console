@@ -2,6 +2,9 @@ namespace Spectre.Console.Cli;
 
 internal static class CommandValueResolver
 {
+#if !NETSTANDARD2_0
+    [RequiresUnreferencedCode("Type conversion might require unreferenced code.")]
+#endif
     public static CommandValueLookup GetParameterValues(CommandTree? tree, ITypeResolver resolver)
     {
         var lookup = new CommandValueLookup();
@@ -114,6 +117,9 @@ internal static class CommandValueResolver
         return lookup;
     }
 
+#if !NETSTANDARD2_0
+    [RequiresUnreferencedCode("Type conversion might require unreferenced code.")]
+#endif
     private static object? ConvertValue(ITypeResolver resolver, CommandValueLookup lookup, CommandValueBinder binder, CommandParameter parameter, object? result)
     {
         if (result != null && result.GetType() != parameter.ParameterType)
@@ -145,6 +151,9 @@ internal static class CommandValueResolver
         return targetArray ?? sourceArray;
     }
 
+#if !NETSTANDARD2_0
+    [RequiresUnreferencedCode("Type conversion might require unreferenced code.")]
+#endif
     [SuppressMessage("Style", "IDE0019:Use pattern matching", Justification = "It's OK")]
     private static SmartConverter GetConverter(CommandValueLookup lookup, CommandValueBinder binder, ITypeResolver resolver, CommandParameter parameter)
     {
@@ -199,13 +208,21 @@ internal static class CommandValueResolver
     /// </summary>
     private readonly ref struct SmartConverter
     {
+#if !NETSTANDARD2_0
+        public SmartConverter(TypeConverter typeConverter, [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)] Type type)
+#else
         public SmartConverter(TypeConverter typeConverter, Type type)
+#endif
         {
             TypeConverter = typeConverter;
             Type = type;
         }
 
         public TypeConverter TypeConverter { get; }
+
+#if !NETSTANDARD2_0
+        [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)]
+#endif
         private Type Type { get; }
 
         public object? ConvertFrom(object input)

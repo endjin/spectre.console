@@ -10,6 +10,9 @@ public static partial class AnsiConsole
     /// </summary>
     /// <param name="exception">The exception to write to the console.</param>
     /// <param name="format">The exception format options.</param>
+#if !NETSTANDARD2_0
+    [RequiresUnreferencedCode("Type conversion might require unreferenced code.")]
+#endif
     public static void WriteException(Exception exception, ExceptionFormats format = ExceptionFormats.Default)
     {
         Console.WriteException(exception, format);
@@ -20,6 +23,9 @@ public static partial class AnsiConsole
     /// </summary>
     /// <param name="exception">The exception to write to the console.</param>
     /// <param name="settings">The exception settings.</param>
+#if !NETSTANDARD2_0
+    [RequiresUnreferencedCode("Type conversion might require unreferenced code.")]
+#endif
     public static void WriteException(Exception exception, ExceptionSettings settings)
     {
         Console.WriteException(exception, settings);

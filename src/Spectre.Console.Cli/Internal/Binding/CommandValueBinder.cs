@@ -9,6 +9,9 @@ internal sealed class CommandValueBinder
         _lookup = lookup;
     }
 
+#if !NETSTANDARD2_0
+    [RequiresUnreferencedCode("Type conversion might require unreferenced code.")]
+#endif
     public void Bind(CommandParameter parameter, ITypeResolver resolver, object? value)
     {
         if (parameter.ParameterKind == ParameterKind.Pair)
@@ -27,6 +30,9 @@ internal sealed class CommandValueBinder
         _lookup.SetValue(parameter, value);
     }
 
+#if !NETSTANDARD2_0
+    [RequiresUnreferencedCode("Type conversion might require unreferenced code.")]
+#endif
     private object GetLookup(CommandParameter parameter, ITypeResolver resolver, object? value)
     {
         var genericTypes = parameter.Property.PropertyType.GetGenericArguments();
@@ -94,6 +100,9 @@ internal sealed class CommandValueBinder
         return newArray;
     }
 
+#if !NETSTANDARD2_0
+    [RequiresUnreferencedCode("Type conversion might require unreferenced code.")]
+#endif
     private object GetFlag(CommandParameter parameter, object? value)
     {
         var flagValue = (IFlagValue?)_lookup.GetValue(parameter);

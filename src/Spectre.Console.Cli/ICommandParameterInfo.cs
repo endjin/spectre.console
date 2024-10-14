@@ -14,6 +14,9 @@ public interface ICommandParameterInfo
     /// <summary>
     /// Gets the parameter type.
     /// </summary>
+#if !NETSTANDARD2_0
+    [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.Interfaces)]
+#endif
     public Type ParameterType { get; }
 
     /// <summary>

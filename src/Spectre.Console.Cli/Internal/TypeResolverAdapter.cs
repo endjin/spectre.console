@@ -8,8 +8,11 @@ internal sealed class TypeResolverAdapter : ITypeResolver, IDisposable
     {
         _resolver = resolver;
     }
-
+#if !NETSTANDARD2_0
+    public object? Resolve([DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicParameterlessConstructor)] Type? type)
+#else
     public object? Resolve(Type? type)
+#endif
     {
         if (type == null)
         {

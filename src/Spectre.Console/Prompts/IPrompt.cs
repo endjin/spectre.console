@@ -11,6 +11,9 @@ public interface IPrompt<T>
     /// </summary>
     /// <param name="console">The console.</param>
     /// <returns>The prompt input result.</returns>
+#if !NETSTANDARD2_0
+    [RequiresUnreferencedCode("")]
+#endif
     T Show(IAnsiConsole console);
 
     /// <summary>
@@ -19,5 +22,8 @@ public interface IPrompt<T>
     /// <param name="console">The console.</param>
     /// <param name="cancellationToken">The token to monitor for cancellation requests.</param>
     /// <returns>The prompt input result.</returns>
+#if !NETSTANDARD2_0
+    [RequiresUnreferencedCode("")]
+#endif
     Task<T> ShowAsync(IAnsiConsole console, CancellationToken cancellationToken);
 }

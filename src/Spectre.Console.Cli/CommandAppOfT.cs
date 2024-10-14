@@ -6,7 +6,11 @@ namespace Spectre.Console.Cli;
 /// The entry point for a command line application with a default command.
 /// </summary>
 /// <typeparam name="TDefaultCommand">The type of the default command.</typeparam>
-public sealed class CommandApp<TDefaultCommand> : ICommandApp
+#if !NETSTANDARD2_0
+public sealed class CommandApp<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.Interfaces)] TDefaultCommand> : ICommandApp
+#else
+    public sealed class CommandApp<TDefaultCommand> : ICommandApp
+#endif
     where TDefaultCommand : class, ICommand
 {
     private readonly CommandApp _app;
@@ -16,6 +20,9 @@ public sealed class CommandApp<TDefaultCommand> : ICommandApp
     /// Initializes a new instance of the <see cref="CommandApp{TDefaultCommand}"/> class.
     /// </summary>
     /// <param name="registrar">The registrar.</param>
+#if !NETSTANDARD2_0
+    [RequiresUnreferencedCode("Type conversion might require unreferenced code.")]
+#endif
     public CommandApp(ITypeRegistrar? registrar = null)
     {
         _app = new CommandApp(registrar);
@@ -36,6 +43,9 @@ public sealed class CommandApp<TDefaultCommand> : ICommandApp
     /// </summary>
     /// <param name="args">The arguments.</param>
     /// <returns>The exit code from the executed command.</returns>
+#if !NETSTANDARD2_0
+    [RequiresUnreferencedCode("Type conversion might require unreferenced code.")]
+#endif
     public int Run(IEnumerable<string> args)
     {
         return _app.Run(args);
@@ -46,6 +56,9 @@ public sealed class CommandApp<TDefaultCommand> : ICommandApp
     /// </summary>
     /// <param name="args">The arguments.</param>
     /// <returns>The exit code from the executed command.</returns>
+#if !NETSTANDARD2_0
+    [RequiresUnreferencedCode("Type conversion might require unreferenced code.")]
+#endif
     public Task<int> RunAsync(IEnumerable<string> args)
     {
         return _app.RunAsync(args);

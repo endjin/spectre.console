@@ -2,6 +2,9 @@ namespace Spectre.Console.Cli;
 
 internal static class CommandBinder
 {
+#if !NETSTANDARD2_0
+    [RequiresUnreferencedCode("Type conversion might require unreferenced code.")]
+#endif
     public static CommandSettings Bind(CommandTree? tree, Type settingsType, ITypeResolver resolver)
     {
         var lookup = CommandValueResolver.GetParameterValues(tree, resolver);

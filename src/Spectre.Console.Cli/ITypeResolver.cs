@@ -10,5 +10,9 @@ public interface ITypeResolver
     /// </summary>
     /// <param name="type">The type to resolve.</param>
     /// <returns>An instance of the specified type, or <c>null</c> if no registration for the specified type exists.</returns>
+#if !NETSTANDARD2_0
+    object? Resolve([DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicParameterlessConstructor)] Type? type);
+#else
     object? Resolve(Type? type);
+#endif
 }

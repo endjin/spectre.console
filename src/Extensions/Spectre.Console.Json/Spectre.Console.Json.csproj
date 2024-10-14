@@ -4,6 +4,7 @@
     <TargetFrameworks>net8.0;net7.0;net6.0;netstandard2.0</TargetFrameworks> 
     <ImplicitUsings>true</ImplicitUsings>
     <IsPackable>true</IsPackable>
+    <IsAotCompatible>true</IsAotCompatible>
     <Description>A library that extends Spectre.Console with JSON superpowers.</Description>
   </PropertyGroup>
 

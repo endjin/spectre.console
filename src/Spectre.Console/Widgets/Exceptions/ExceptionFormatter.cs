@@ -2,6 +2,9 @@ namespace Spectre.Console;
 
 internal static class ExceptionFormatter
 {
+#if !NETSTANDARD2_0
+    [RequiresUnreferencedCode("Type conversion might require unreferenced code.")]
+#endif
     public static IRenderable Format(Exception exception, ExceptionSettings settings)
     {
         if (exception is null)
@@ -12,6 +15,9 @@ internal static class ExceptionFormatter
         return GetException(exception, settings);
     }
 
+#if !NETSTANDARD2_0
+    [RequiresUnreferencedCode("Type conversion might require unreferenced code.")]
+#endif
     private static IRenderable GetException(Exception exception, ExceptionSettings settings)
     {
         if (exception is null)
@@ -33,6 +39,9 @@ internal static class ExceptionFormatter
         return new Markup(string.Concat(type, ": ", message));
     }
 
+#if !NETSTANDARD2_0
+    [RequiresUnreferencedCode("Type conversion might require unreferenced code.")]
+#endif
     private static Grid GetStackFrames(Exception ex, ExceptionSettings settings)
     {
         var styles = settings.Style;
@@ -188,6 +197,9 @@ internal static class ExceptionFormatter
         return builder.ToString();
     }
 
+#if !NETSTANDARD2_0
+    [RequiresUnreferencedCode("Type conversion might require unreferenced code.")]
+#endif
     private static bool ShowInStackTrace(StackFrame frame)
     {
         // NET 6 has an attribute of StackTraceHiddenAttribute that we can use to clean up the stack trace
@@ -226,6 +238,9 @@ internal static class ExceptionFormatter
         return true;
     }
 
+#if !NETSTANDARD2_0
+    [RequiresUnreferencedCode("Type conversion might require unreferenced code.")]
+#endif
     private static IEnumerable<StackFrame> FilterStackFrames(this IEnumerable<StackFrame?>? frames)
     {
         var allFrames = frames?.ToArray() ?? Array.Empty<StackFrame>();
@@ -398,7 +413,11 @@ internal static class ExceptionFormatter
         return builder.ToString();
     }
 
+#if !NETSTANDARD2_0
+    private static bool TryResolveStateMachineMethod(ref MethodBase method, [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicMethods | DynamicallyAccessedMemberTypes.NonPublicMethods)] out Type declaringType)
+#else
     private static bool TryResolveStateMachineMethod(ref MethodBase method, out Type declaringType)
+#endif
     {
         // https://github.com/dotnet/runtime/blob/v6.0.0/src/libraries/System.Private.CoreLib/src/System/Diagnostics/StackTrace.cs#L400-L455
         declaringType = method.DeclaringType ??
@@ -410,12 +429,17 @@ internal static class ExceptionFormatter
             return false;
         }
 
-        static IEnumerable<MethodInfo> GetDeclaredMethods(IReflect type) => type.GetMethods(
-            BindingFlags.Public |
-            BindingFlags.NonPublic |
-            BindingFlags.Static |
-            BindingFlags.Instance |
-            BindingFlags.DeclaredOnly);
+#if !NETSTANDARD2_0
+        [return: DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicMethods | DynamicallyAccessedMemberTypes.NonPublicMethods)]
+        static IEnumerable<MethodInfo> GetDeclaredMethods([DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicMethods | DynamicallyAccessedMemberTypes.NonPublicMethods)] IReflect type)
+#else
+        static IEnumerable<MethodInfo> GetDeclaredMethods(IReflect type)
+#endif
+            => type.GetMethods(BindingFlags.Public |
+                               BindingFlags.NonPublic |
+                               BindingFlags.Static |
+                               BindingFlags.Instance |
+                               BindingFlags.DeclaredOnly);
 
         var methods = GetDeclaredMethods(parentType);
 

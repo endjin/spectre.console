@@ -70,7 +70,11 @@ internal static class CommandModelBuilder
         return info;
     }
 
+#if !NETSTANDARD2_0
+    private static IEnumerable<CommandParameter> GetParameters([DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicProperties)] CommandInfo command)
+#else
     private static IEnumerable<CommandParameter> GetParameters(CommandInfo command)
+#endif
     {
         var result = new List<CommandParameter>();
         var argumentPosition = 0;
